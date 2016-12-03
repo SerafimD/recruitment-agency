@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  addition_date: 2016-12-03 16:50:22
+  duration: 2016-12-03 16:50:22
+  salary: 1
+  contact: MyText
+
+two:
+  name: MyString
+  addition_date: 2016-12-03 16:50:22
+  duration: 2016-12-03 16:50:22
+  salary: 1
+  contact: MyText
