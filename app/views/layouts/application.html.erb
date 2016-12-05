@@ -6,6 +6,13 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= link_to 'Главная', root_path %>
+    &mdash;
+    <%= link_to 'Вакансии', vacancies_url %>
+    &mdash;
+    <%= link_to 'Работники', workers_url %>
+
   </head>
 
   <body>
