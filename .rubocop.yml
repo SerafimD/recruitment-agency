@@ -1,0 +1,11 @@
+
+Style/Encoding:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/EmptyCaseCondition:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 20
