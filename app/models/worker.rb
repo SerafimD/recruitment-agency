@@ -1,4 +1,5 @@
 class Worker < ApplicationRecord
+  has_many :worker_skills, dependent: :destroy
   validates :name, :contact, presence: true
   validates :name, format: {
       with: %r{[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+},
