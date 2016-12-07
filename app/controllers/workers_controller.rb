@@ -19,6 +19,7 @@ class WorkersController < ApplicationController
 
   # GET /workers/1/edit
   def edit
+    @worker_skill = WorkerSkill.new
   end
 
   # POST /workers

@@ -4,15 +4,20 @@ class WorkerSkillsController < ApplicationController
   # POST /workers
   # POST /workers.json
   def create
-    @worker_skill = WorkerSkill.new(worker_skill_params)
-
+    @worker = Worker.find(params[:worker_id])
+    @worker_skill = WorkerSkill.new
+    @worker_skill.name = Skill.find(params[:skill_id]).name
+    @worker_skill.worker_id = @worker.id
     respond_to do |format|
       if @worker_skill.save
-        format.html { redirect_to @worker_skill, notice: 'Worker was successfully created.' }
-        format.json { render :show, status: :created, location: @worker_skill }
+        format.html { redirect_to @worker, notice: 'Skill successfully added.' }
+        format.json { render :show, status: :created, location: @worker }
       else
         format.html { render :new }
         format.json { render json: @worker_skill.errors, status: :unprocessable_entity }
+        #format.json { render json: @worker_skill.errors, status: :unprocessable_entity }
+        #format.html { redirect_to @worker, notice: 'Skill successfully added.' }
+
       end
     end
   end
@@ -21,10 +26,6 @@ class WorkerSkillsController < ApplicationController
 
   def set_worker_skill
     @worker_skill = WorkerSkill.find(params[:id])
-  end
-
-  def worker_skill_params
-    params.require(:worker_skill).permit(:name)
   end
 
 end
