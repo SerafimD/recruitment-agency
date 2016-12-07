@@ -31,6 +31,11 @@
     <%= f.number_field :salary %>
   </div>
 
+  <div class="field">
+    <%= f.label :skill %>
+    <%= f.collection_select :worker_id, Skill.all, :id, :name, prompt: true %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
