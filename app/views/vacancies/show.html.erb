@@ -21,6 +21,13 @@
 </p>
 
 <p>
+  <strong>Skills:</strong>
+  <% @vacancy.vacancy_skills.each do |skill| %>
+      <br><%= skill.name %>
+  <% end %>
+</p>
+
+<p>
   <strong>Contact:</strong>
   <%= @vacancy.contact %>
 </p>

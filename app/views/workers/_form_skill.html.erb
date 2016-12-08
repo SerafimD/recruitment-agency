@@ -1,0 +1,9 @@
+<%= form_tag '/worker_skills' do %>
+    <% options = Array.new %>
+    <% Skill.all.each do |skill| %>
+    <% options << [skill.name, skill.id] %>
+    <% end %>
+    <%= select_tag(:skill_id, options_for_select(options)) %>
+    <%= hidden_field_tag(:worker_id, @worker.id) %>
+    <%= submit_tag 'Add' %>
+<% end %>

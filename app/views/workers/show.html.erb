@@ -20,5 +20,12 @@
   <%= @worker.salary %>
 </p>
 
+<p>
+  <strong>Skills:</strong>
+  <% @worker.worker_skills.each do |skill| %>
+  <br><%= skill.name %>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_worker_path(@worker) %> |
 <%= link_to 'Back', workers_path %>
