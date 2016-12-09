@@ -22,6 +22,12 @@ class WorkersController < ApplicationController
     @worker_skill = WorkerSkill.new
   end
 
+  def vacancies
+    @worker = Worker.find(params[:id])
+    @vacancies = find_a_suitable_job(@worker)
+    @partially_vacancies = find_a_partially_suitable_job(@worker) - find_a_suitable_job(@worker)
+  end
+
   # POST /workers
   # POST /workers.json
   def create
@@ -72,4 +78,62 @@ class WorkersController < ApplicationController
     def worker_params
       params.require(:worker).permit(:name, :contact, :in_search, :salary)
     end
+
+    #
+    # Метод вернёт все подходящие вакансии для работника
+    #
+    def find_a_suitable_job(worker)
+      vacancies = Array.new
+      Vacancy.all.each do |v|
+        vacancies << v if (get_vacancy_skills(v) &
+            get_worker_skills(worker)).count == get_vacancy_skills(v).count
+      end
+      # Убираем из выдачи те вакансии, что истекли по дате
+      not_expired(vacancies)
+    end
+
+    #
+    # Частично подходящие вакансии
+    #
+    def find_a_partially_suitable_job(worker)
+      vacancies = Array.new
+      Vacancy.all.each do |v|
+        vacancies << v if (get_worker_skills(worker) & get_vacancy_skills(v)).count > 0
+      end
+      # Убираем из выдачи те вакансии, что истекли по дате
+      not_expired(vacancies)
+    end
+
+
+    #
+    # Метод для получения всех скиллов для вакансии
+    #
+    def get_vacancy_skills(vacancy)
+      skills = Array.new
+      vacancy.vacancy_skills.each do |skill|
+        skills << skill.name
+      end
+      skills
+    end
+
+    #
+    # Метод для получения всех скиллов работника
+    #
+    def get_worker_skills(worker)
+      skills = Array.new
+      worker.worker_skills.each do |skill|
+        skills << skill.name
+      end
+      skills
+    end
+
+    #
+    # отдаём вакансии, которые не истекли по времени
+    #
+    def not_expired(vacancies)
+      v = vacancies.select { |item| item.duration > Time.now }
+      # Сортируем по размеру заработной платы
+      v.sort_by! { |vac| vac.salary }
+    end
+
 end

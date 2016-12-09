@@ -13,11 +13,8 @@ class WorkerSkillsController < ApplicationController
         format.html { redirect_to @worker, notice: 'Skill successfully added.' }
         format.json { render :show, status: :created, location: @worker }
       else
-        format.html { render :new }
-        format.json { render json: @worker_skill.errors, status: :unprocessable_entity }
-        #format.json { render json: @worker_skill.errors, status: :unprocessable_entity }
-        #format.html { redirect_to @worker, notice: 'Skill successfully added.' }
-
+        format.html { redirect_to @worker, notice: 'Skill added failed.' }
+        format.json { render :show, location: @worker }
       end
     end
   end
