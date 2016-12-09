@@ -116,7 +116,9 @@ class WorkersController < ApplicationController
     # отдаём вакансии, которые не истекли по времени
     #
     def not_expired(vacancies)
-      vacancies.select { |item| item.duration > Time.now }
+      v = vacancies.select { |item| item.duration > Time.now }
+      # Сортируем по размеру заработной платы
+      v.sort_by! { |vac| vac.salary }
     end
 
 end
