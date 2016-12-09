@@ -24,6 +24,7 @@
         <td><%= vacancy.salary %></td>
         <td><%= vacancy.contact %></td>
         <td><%= vacancy.vacancy_skills.map {|skill| skill.name}%></td>
+        <td><%= link_to 'workers', controller: 'vacancies', action: 'workers', id: vacancy.id %></td>
         <td><%= link_to 'Show', vacancy %></td>
         <td><%= link_to 'Edit', edit_vacancy_path(vacancy) %></td>
         <td><%= link_to 'Destroy', vacancy, method: :delete, data: { confirm: 'Are you sure?' } %></td>

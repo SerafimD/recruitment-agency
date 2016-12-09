@@ -25,6 +25,7 @@ class WorkersController < ApplicationController
   def vacancies
     @worker = Worker.find(params[:id])
     @vacancies = find_a_suitable_job(@worker)
+    @partially_vacancies = find_a_partially_suitable_job(@worker)
   end
 
   # POST /workers
@@ -89,6 +90,19 @@ class WorkersController < ApplicationController
       # Убираем из выдачи те вакансии, что истекли по дате
       not_expired(vacancies)
     end
+
+    #
+    # Частично подходящие вакансии
+    #
+    def find_a_partially_suitable_job(worker)
+      vacancies = Array.new
+      Vacancy.all.each do |v|
+        vacancies << v if (get_worker_skills(worker) & get_vacancy_skills(v)).count > 0
+      end
+      # Убираем из выдачи те вакансии, что истекли по дате
+      not_expired(vacancies)
+    end
+
 
     #
     # Метод для получения всех скиллов для вакансии

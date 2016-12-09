@@ -21,6 +21,12 @@ class VacanciesController < ApplicationController
   def edit
   end
 
+  def workers
+    @vacancy = Vacancy.find(params[:id])
+    @workers = find_a_suitable_workers(@vacancy)
+    @partially_workers = find_a_partially_suitable_workers(@vacancy)
+  end
+
   # POST /vacancies
   # POST /vacancies.json
   def create
@@ -71,4 +77,58 @@ class VacanciesController < ApplicationController
     def vacancy_params
       params.require(:vacancy).permit(:name, :addition_date, :duration, :salary, :contact)
     end
+
+    #
+    # Работники полностью подходящие по скиллам
+    #
+    def find_a_suitable_workers(vacancy)
+      workers = Array.new
+      Worker.all.each do |w|
+        workers << w if get_worker_skills(w) == get_vacancy_skills(vacancy)
+      end
+      in_search(workers)
+    end
+
+    #
+    # Работники частично подходящие по скиллам
+    #
+    def find_a_partially_suitable_workers(vacancy)
+      workers = Array.new
+      Worker.all.each do |w|
+        workers << w if (get_worker_skills(w) & get_vacancy_skills(vacancy)).count > 0
+      end
+      in_search(workers)
+    end
+
+    #
+    # Метод для получения всех скиллов для вакансии
+    #
+    def get_vacancy_skills(vacancy)
+      skills = Array.new
+      vacancy.vacancy_skills.each do |skill|
+        skills << skill.name
+      end
+      skills
+    end
+
+    #
+    # Метод для получения всех скиллов работника
+    #
+    def get_worker_skills(worker)
+      skills = Array.new
+      worker.worker_skills.each do |skill|
+        skills << skill.name
+      end
+      skills
+    end
+
+    #
+    # Метод вернёт только работников, которые ищут работу
+    #
+    def in_search(workers)
+      w = workers.select { |item| item.in_search}
+      # Сортируем по зарплатным ожиданиям
+      w.sort_by! { |wor| wor.salary }
+    end
+
 end

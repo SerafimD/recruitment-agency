@@ -1,4 +1,4 @@
-<h1>Current worker :</h1>
+<h1>Текущий работник :</h1>
 
 <table>
   <thead>
@@ -21,7 +21,9 @@
   </tbody>
 </table>
 
-<h1>Available vacancies :</h1>
+<br>
+
+<h1>Подходящие вакансии :</h1>
 <table>
   <thead>
   <tr>
@@ -44,4 +46,31 @@
   </tbody>
 
 </table>
+
+<br>
+
+<h1>Частично подходящие вакансии :</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Duration</th>
+    <th>Salary</th>
+    <th>Contact</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @partially_vacancies.each do |vacancy| %>
+      <tr>
+        <td><%= vacancy.name %></td>
+        <td><%= vacancy.duration %></td>
+        <td><%= vacancy.salary %></td>
+        <td><%= vacancy.contact %></td>
+      </tr>
+  <% end %>
+  </tbody>
+
+</table>
+
 <br>

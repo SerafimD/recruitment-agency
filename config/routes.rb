@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get 'main', to: 'main#index', as: :main
   get '/workers/:id/vacancies', to: 'workers#vacancies'
+  get '/vacancies/:id/workers', to: 'vacancies#workers'
   root :to => 'main#index'
 end
