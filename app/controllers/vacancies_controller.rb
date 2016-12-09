@@ -24,7 +24,7 @@ class VacanciesController < ApplicationController
   def workers
     @vacancy = Vacancy.find(params[:id])
     @workers = find_a_suitable_workers(@vacancy)
-    @partially_workers = find_a_partially_suitable_workers(@vacancy)
+    @partially_workers = find_a_partially_suitable_workers(@vacancy) - find_a_suitable_workers(@vacancy)
   end
 
   # POST /vacancies
@@ -84,7 +84,8 @@ class VacanciesController < ApplicationController
     def find_a_suitable_workers(vacancy)
       workers = Array.new
       Worker.all.each do |w|
-        workers << w if get_worker_skills(w) == get_vacancy_skills(vacancy)
+        workers << w if (get_worker_skills(w) &
+            get_vacancy_skills(vacancy)).count == get_vacancy_skills(vacancy).count
       end
       in_search(workers)
     end
