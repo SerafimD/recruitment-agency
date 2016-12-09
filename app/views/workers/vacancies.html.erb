@@ -1,0 +1,47 @@
+<h1>Current worker :</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Contact</th>
+    <th>In search</th>
+    <th>Salary</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= @worker.name %></td>
+        <td><%= @worker.contact %></td>
+        <td><%= @worker.in_search %></td>
+        <td><%= @worker.salary %></td>
+      </tr>
+  </tbody>
+</table>
+
+<h1>Available vacancies :</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Duration</th>
+    <th>Salary</th>
+    <th>Contact</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @vacancies.each do |vacancy| %>
+      <tr>
+        <td><%= vacancy.name %></td>
+        <td><%= vacancy.duration %></td>
+        <td><%= vacancy.salary %></td>
+        <td><%= vacancy.contact %></td>
+      </tr>
+  <% end %>
+  </tbody>
+
+</table>
+<br>
